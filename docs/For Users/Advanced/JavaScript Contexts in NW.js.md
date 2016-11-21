@@ -1,22 +1,21 @@
-# JavaScript Contexts in NW.js {: .doctitle}
----
-
+# 在NW.js中的javascript环境
 [TOC]
 
-## Concept of JavaScript Context
+## javascript环境的概念
 
-Scripts running in different windows live in different JavaScript contexts, i.e. each window has its own global object and its own set of global constructors (such as `Array` or `Object`).
+脚本运行在不同的窗口中也就是运行在不同的javascript环境中。每一个窗口都有它自己的全局对象和它自己的全局构造函数（比如‘Array’ or 'Object'）;
 
-That's common practice among web browsers and it's a good thing because, for example:
+这就是在web浏览器中共同的最佳实践，并且它也是一个很好的事情，如下原因：
 
-* when an object's prototype is replaced or augmented by some library (such as [Prototype](http://prototypejs.org/)) or a simpler script, the analogous objects in other windows are unaffected nevertheless;
-* when a programmer makes a mistake (such as [missing `new` before a poorly written constructor](http://ejohn.org/blog/simple-class-instantiation/)) and the bug affects (pollutes) the global scope, it still cannot affect larger areas (several windows);
-* malicious applications cannot access confidential data structures in other windows.
+*当一个对象的原型对象被一些库（比如[Prototype](http://prototypejs.org/)）或者另外一个简单的脚本代替或者扩展了，而在其他的窗口中，相似的对象则完全不会受到影响。
 
-When a script accessing to an object / function defined in another context, JS engine will temporarily enter the target context and leave it once finished. 
+*当一个程序员代码出了问题（比如 [missing `new` before a poorly written constructor](http://ejohn.org/blog/simple-class-instantiation/)），并且这个bug造成了对全局作用域的污染，它也不能影响更大的作用域（其他的窗口）;
 
-## Separate Context Mode
+*恶意的应用也不能在其他的窗口中去操作数据。
 
+当一个脚本访问一个在其他环境中定义的对象/函数时，js引擎将会暂时进入对象的环境并在操作完成之后立刻离开。
+
+## 隔离环境对象
 Besides the contexts created by browsers, NW.js introduced additional Node context for running Node modules by default. So NW.js has two types of JavaScript contexts: **Browser Context** and **Node Context**.
 
 !!! note "Web Worker"
